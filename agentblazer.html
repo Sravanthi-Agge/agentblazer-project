@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentblazer Club Inauguration</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: bisque;
+            margin: 0;
+            padding: 0;
+            color: #374151; /* text-gray-800 equivalent */
+        }
+
+        .container {
+            max-width: 1280px; /* Equivalent to container in Tailwind */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
+            padding-top: 3rem; /* py-12 */
+            padding-bottom: 3rem; /* py-12 */
+            text-align: center;
+        }
+
+        .header-logos {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; /* items-end */
+            gap: 0.25rem; /* gap-x-1 */
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+
+        .agentblazer-logo {
+            width: auto;
+            height: 4rem; /* h-16 */
+            object-fit: contain;
+        }
+        @media (min-width: 768px) { /* md:h-24 */
+            .agentblazer-logo {
+                height: 6rem;
+            }
+        }
+
+        .club-text {
+            font-size: 1.875rem; /* text-3xl */
+            color: #1a202c; /* text-gray-900 */
+            line-height: 1; /* leading-none */
+            font-family: 'Caveat', cursive;
+        }
+        @media (min-width: 768px) { /* md:text-4xl */
+            .club-text {
+                font-size: 2.25rem;
+            }
+        }
+
+        .college-logo {
+            width: 100%; /* w-full */
+            max-width: 180px; /* max-w-[180px] */
+            height: auto;
+            border-radius: 0.375rem; /* rounded-md */
+            object-fit: contain;
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+
+        .header-text-large {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #4b5563; /* text-gray-700 */
+            margin-top: 0.5rem; /* mt-2 or mt-1 */
+        }
+
+        .inauguration-title {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #3357FF;
+            margin-top: 0.5rem; /* mt-2 */
+        }
+        @media (min-width: 768px) { /* md:text-3xl */
+            .inauguration-title {
+                font-size: 1.875rem;
+            }
+        }
+
+        .stats-grid {
+            margin-top: 2rem; /* mt-8 */
+            display: grid;
+            grid-template-columns: 1fr; /* grid-cols-1 */
+            gap: 2rem; /* gap-8 */
+        }
+        @media (min-width: 768px) { /* md:grid-cols-3 */
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .stat-card {
+            background-color: darkgray; /* bg-gray-100 */
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+        }
+
+        .stat-number {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+        }
+        .stat-number.orange { color: #FF5733; }
+        .stat-number.green { color: black; }
+        .stat-number.pink { color: #FF33A1; }
+
+        .stat-label {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            margin-top: 0.5rem; /* mt-2 */
+        }
+
+        /* Main Section Styles (Full-Screen) */
+        main section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 3rem; /* py-12 */
+            padding-bottom: 3rem; /* py-12 */
+        }
+
+        main section > div {
+            max-width: 1280px; /* container width */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+            width: 100%; /* Ensure it takes available width within container */
+        }
+
+        /* Specific Section Styles */
+        .section-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            text-align: center;
+            margin-bottom: 3rem; /* mb-12 */
+        }
+
+        .section-description {
+            max-width: 48rem; /* max-w-3xl */
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            font-size: 1.125rem; /* text-lg */
+            color:orangered; /* text-gray-600 */
+            margin-bottom: 3rem; /* mb-12 */
+        }
+
+        .grid-3-cols {
+            display: grid;
+            grid-template-columns: 1fr; /* grid-cols-1 */
+            gap: 2rem; /* gap-8 */
+        }
+        @media (min-width: 640px) { /* sm:grid-cols-2 */
+            .grid-3-cols {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) { /* lg:grid-cols-3 */
+            .grid-3-cols {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background-color: pink;
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
+            text-align: center;
+        }
+
+        .card-icon {
+            font-size: 3rem; /* text-5xl */
+        }
+
+        .card-title {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 1000; /* font-bold */
+            margin-top: 1rem; /* mt-4 */
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+
+        .card-text {
+            font-size:1rem; /* default text size */
+            color: red; /* text-gray-600 */
+        }
+
+        /* Speaker Card Specific Styles */
+        .speaker-image {
+            width: 8rem; /* w-32 */
+            height: 8rem; /* h-32 */
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 9999px; /* rounded-full */
+            object-fit: cover;
+            margin-bottom: 1rem; /* mb-4 */
+            border: 4px solid #e5e7eb; /* border-4 border-gray-200 */
+        }
+
+        .speaker-name {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 700; /* font-bold */
+            margin-top: 0.5rem; /* mt-2 */
+            margin-bottom: 0.25rem; /* mb-1 */
+        }
+
+        .speaker-title {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            color: #3357FF;
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+
+        .speaker-bio {
+            font-size: 1rem; /* text-md */
+            color: #4b5563; /* text-gray-600 */
+        }
+
+        .linkedin-link {
+            font-size: 1rem; /* text-md */
+            font-weight: 600; /* font-semibold */
+            margin-top: 0.5rem; /* mt-2 */
+            color: #3357FF; /* text-[#3357FF] */
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .linkedin-link:hover {
+            text-decoration: underline;
+        }
+        .linkedin-icon {
+            margin-right: 0.5rem; /* mr-2 */
+        }
+
+        /* Timeline Specific Styles */
+        #agenda {
+            padding-top: 3rem; /* py-12 */
+            padding-bottom: 5rem; /* mb-20 equivalent */
+            display: block; /* Override flex for this section */
+            min-height: auto; /* Override min-h-screen */
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color:black;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-container.left {
+            left: 0;
+        }
+        .timeline-container.right {
+            left: 50%;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            background-color: white;
+            border: 4px solid green;
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .timeline-container.right::after {
+            left: -13px;
+        }
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-container.right {
+                left: 0%;
+            }
+            .timeline-container.left::after, .timeline-container.right::after {
+                left: 18px;
+            }
+        }
+
+        /* Chart Container Specific Styles */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        /* Spotlight Section Specific Styles */
+        #spotlight .card {
+            background-color: white; /* bg-white */
+            padding: 2rem; /* p-8 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-md */
+        }
+        #spotlight .grid-cols-1 {
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 768px) { /* md:grid-cols-2 */
+            #spotlight .grid-cols-1 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        #spotlight .text-center { text-align: center; }
+        @media (min-width: 768px) { /* md:text-left */
+            #spotlight .md\:text-left { text-align: left; }
+        }
+        #spotlight .text-8xl { font-size: 6rem; }
+        #spotlight .text-6xl { font-size: 4rem; }
+        #spotlight .text-2xl { font-size: 1.5rem; }
+        #spotlight .font-bold { font-weight: 700; }
+        #spotlight .text-[#F1C40F] { color: #F1C40F; }
+        #spotlight .mt-4 { margin-top: 1rem; }
+        #spotlight .mt-2 { margin-top: 0.5rem; }
+        #spotlight .mb-4 { margin-bottom: 1rem; }
+        #spotlight strong { font-weight: bold; }
+
+
+        /* AI Feature Section Styles (Commented out in HTML but styles remain) */
+        .ai-section {
+            background-color: white;
+            padding: 2rem; /* p-8 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
+        }
+        .ai-input {
+            flex-grow: 1; /* flex-grow */
+            padding: 0.75rem; /* p-3 */
+            border: 1px solid #d1d5db; /* border border-gray-300 */
+            border-radius: 0.375rem; /* rounded-md */
+            outline: none; /* focus:outline-none */
+        }
+        .ai-input:focus {
+            box-shadow: 0 0 0 2px rgba(51, 87, 255, 0.5); /* focus:ring-2 focus:ring-[#3357FF] */
+        }
+        .ai-button {
+            background-color: #3357FF; /* bg-[#3357FF] */
+            color: white;
+            font-weight: 700; /* font-bold */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            font-size: 1.125rem; /* text-lg */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 150px; /* min-w-[150px] */
+            transition: background-color 0.2s ease-in-out;
+        }
+        .ai-button.career {
+            background-color: #FF5733; /* bg-[#FF5733] */
+        }
+        .ai-button:hover {
+            background-color: rgba(51, 51, 255, 0.9); /* hover:bg-opacity-90 */
+        }
+        .ai-button.career:hover {
+            background-color: rgba(255, 87, 51, 0.9);
+        }
+        .ai-spinner {
+            display: none; /* hidden */
+            animation: spin 1s linear infinite; /* animate-spin */
+            border-radius: 50%; /* rounded-full */
+            height: 1.25rem; /* h-5 */
+            width: 1.25rem; /* w-5 */
+            border-bottom: 2px solid white; /* border-b-2 border-white */
+            margin-left: 0.5rem; /* ml-2 */
+        }
+        .ai-output {
+            margin-top: 2rem; /* mt-8 */
+            padding: 1.5rem; /* p-6 */
+            background-color: #f9fafb; /* bg-gray-50 */
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 1px solid #e5e7eb; /* border border-gray-200 */
+            color: #4b5563; /* text-gray-700 */
+            min-height: 100px; /* min-h-[100px] */
+            text-align: left;
+        }
+        .usage-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #6b7280; /* text-gray-500 */
+            margin-top: 0.5rem; /* mt-2 */
+            text-align: center;
+        }
+        .usage-text .error {
+            color: red; /* text-red-600 */
+            font-weight: 600; /* font-semibold */
+        }
+
+        /* Global Limit Message Overlay */
+        .global-limit-message {
+            display: none; /* hidden */
+            position: fixed;
+            inset: 0; /* inset-0 */
+            background-color: rgba(0, 0, 0, 0.75); /* bg-black bg-opacity-75 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50; /* z-50 */
+            padding: 1rem; /* p-4 */
+        }
+        .global-limit-message > div {
+            background-color: white;
+            padding: 2rem; /* p-8 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* shadow-xl */
+            text-align: center;
+            max-width: 28rem; /* max-w-md */
+        }
+        .global-limit-message h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #dc2626; /* text-red-600 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .global-limit-message p {
+            font-size: 1.125rem; /* text-lg */
+            color: #4b5563; /* text-gray-700 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .global-limit-message p.text-md {
+            font-size: 1rem; /* text-md */
+            color: #6b7280; /* text-gray-600 */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #1a202c; /* bg-gray-900 */
+            color: white;
+            text-align: center;
+            padding-top: 3reem; /* py-12 */
+            padding-bottom: 3rem; /* py-12 */
+        }
+
+        footer h2 {
+            font-size: 1.827rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+        }
+
+        footer p {
+            margin-top: 1rem; /* mt-2 */
+            font-size: 1rem; /* text-lg */
+            color: #d1d5db; /* text-gray-300 */
+        }
+
+        .member-button {
+            display: inline-block;
+            margin-top: 3rem; /* mt-8 */
+            background-color: #FF5733;
+            color: white;
+            font-weight: 700; /* font-bold */
+            padding: 0.75rem 2rem; /* py-3 px-8 */
+            border-radius: 0.5rem; /* rounded-lg */
+            font-size: 1.125rem; /* text-lg */
+            text-decoration: none;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .member-button:hover {
+            background-color: rgba(255, 87, 51, 0.9); /* hover:bg-opacity-90 */
+        }
+
+        /* Animations */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body style="background-color:bisque">
+
+    <header>
+        <div class="container">
+            <!-- Logos for collaboration -->
+            <div class="header-logos">
+                <img src="https://agentblazer-club-au.github.io/launch/Agentblazer-logo.png" alt="Agentblazer Logo" class="agentblazer-logo">
+                <span class="club-text">club</span>
+            </div>
+            <!-- Adjusted layout to remove Salesforce logo and make the college logo larger and centered -->
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
+                <img src="https://agentblazer-club-au.github.io/launch/anurag-logo-2.png" alt="College Logo" class="college-logo">
+            </div>
+            
+            <p class="header-text-large">An Initiative by The Office of Industry Alliances</p>
+            <p class="header-text-large" style="margin-top: 0.25rem;">In collaboration with Salesforce Global Workforce Development Team</p>
+            <p class="inauguration-title">Inauguration Ceremony</p>
+            <p class="header-text-large" style="margin-top: 0.25rem;">August 5, 2025</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <p class="stat-number orange">150+</p>
+                    <p class="stat-label">Expected Attendees</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-number green">8</p>
+                    <p class="stat-label">Keynote Sessions & Activities</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-number pink">1</p>
+                    <p class="stat-label">Pioneering Community</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- NEW SECTION: Meet Our Speakers - now first -->
+        <section id="speakers">
+            <div>
+                <h2 class="section-title">Meet Our Speakers</h2>
+                <div id="speakers-container" class="grid-3-cols">
+                    <div class="card">
+      <img src="https://agentblazer-club-au.github.io/launch/images/RaviTamada-Picture.jpg" alt="Ravi Tamada" class="speaker-image">
+      <h3 class="speaker-name">Ravi Tamada</h3>
+      <p class="speaker-title">Solutions Architect, Capgemini</p>
+      <p class="speaker-bio">Ravi Tamada is an integration expert with 20 years of experience, specializing in Salesforce, MuleSoft and other integration products. Expert in providing complex integration solutions. As a MuleSoft Ambassador and Hyderabad MuleSoft Community Leader, he is active in the Salesforce and community ecosystems, and regularly conducts and speaks at community events.</p>
+    </div>
+
+    <!-- Speaker 2 -->
+    <div class="card">
+      <img src="https://agentblazer-club-au.github.io/launch/images/Siddhartha-photo-cropped.jpeg" alt="Dr. Siddhartha Ghosh" class="speaker-image">
+      <h3 class="speaker-name">Dr. Siddhartha Ghosh</h3>
+      <p class="speaker-title">Director of OIA, Anurag University
+
+</p>
+      <p class="speaker-bio">Dr. Siddhartha Ghosh is a passionate leader in academic-industry collaboration, driving initiatives that bridge the gap between education and practical workforce needs. With expertise in mentorship, leadership, and L&D, he is also deeply involved in academics and research in Artificial Intelligence, Machine Learning, and Deep Learning.</p>
+    </div>
+    <div class="card">
+      <img src="https://agentblazer-club-au.github.io/launch/images/vikas-photo.png" alt="Vikas Bandaru" class="speaker-image">
+      <h3 class="speaker-name">Vikas Bandaru</h3>
+      <p class="speaker-title">Technical Manager, OIA, Anurag University</p>
+      <p class="speaker-bio">Vikas Bandaru is a curriculum designer and educator with over a decade of experience, specializing in transforming complex technical subjects into engaging learning experiences. He is a 2X Salesforce Certified Developer with expertise in Java and other full-stack technologies, and he is currently focused on using Generative AI to make learning and development more innovative.</p>
+    </div>
+                    <!-- Speaker cards will be dynamically inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <section id="vision">
+            <div>
+                <h2 class="section-title" style="margin-bottom: 1rem;">Our Vision & Mission</h2>
+                <p class="section-description">
+                    The official launch of the Agentblazer Club aims to build a vibrant community centered around Agentforce and Responsible AI, inspiring students to pursue groundbreaking careers and fostering connections with industry leaders.
+                </p>
+                <div class="grid-3-cols">
+                    <div class="card">
+                        <span class="card-icon">🚀</span>
+                        <h3 class="card-title">Official Launch</h3>
+                        <p class="card-text">Formally introduce the club to the university community and our industry partners.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">💡</span>
+                        <h3 class="card-title">Inspire & Motivate</h3>
+                        <p class="card-text">Share insights on career opportunities in Agentforce and Responsible AI.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">🏆</span>
+                        <h3 class="card-title">Showcase Talent</h3>
+                        <p class="card-text">Highlight student achievements through project presentations and awards.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">🤝</span>
+                        <h3 class="card-title">Facilitate Networking</h3>
+                        <p class="card-text">Connect students with faculty, club leads, and industry professionals.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">🗺️</span>
+                        <h3 class="card-title">Outline Initiatives</h3>
+                        <p class="card-text">Present the club's roadmap, including summer training and future projects.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">🧠</span>
+                        <h3 class="card-title">Generate Awareness</h3>
+                        <p class="card-text">Educate attendees on the club's mission, vision, and planned activities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="agenda" style="min-height: auto; display: block; padding-top: 3rem; padding-bottom: 5rem;">
+            <h2 class="section-title">The Inaugural Agenda</h2>
+            <div class="timeline">
+                <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">09:15 AM</h3>
+                        <p class="font-semibold">Welcome</p>
+                        <p class="text-sm" style="color: #4b5563;">You will be received by Club Leads at the campus.</p>
+                    </div>
+                </div>
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">09:30 AM</h3>
+                        <p class="font-semibold">Coffee & Networking</p>
+                        <p class="text-sm" style="color: #4b5563;">With the Director of the Office of Industry Alliances & team.</p>
+                    </div>
+                </div>
+                <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">10:00 AM</h3>
+                        <p class="font-semibold">Welcome Speech by Dean, School of Engineering</p>
+                        <p class="text-sm" style="color: #4b5563;">Speech to kick off the event.</p>
+                    </div>
+                </div>
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">10:10 AM</h3>
+                        <p class="font-semibold">Welcome & Inaugural Speech</p>
+                        <p class="text-sm" style="color: #4b5563;">By the Director, the Office of Industry Alliances.</p>
+                    </div>
+                </div>
+                <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">10:20 AM</h3>
+                        <p class="font-semibold">Salesforce Training Overview during Summer Break</p>
+                        <p class="text-sm" style="color: #4b5563;">By Vikas Bandaru, Technical Manager, OIA.</p>
+                    </div>
+                </div>
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">10:30 AM</h3>
+                        <p class="font-semibold">Top Project Presentations</p>
+                        <p class="text-sm" style="color: #4b5563;">Students showcase their innovative projects.</p>
+                    </div>
+                </div>
+                 <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">11:00 AM</h3>
+                        <p class="font-semibold">Special Achievement Awards</p>
+                        <p class="text-sm" style="color: #4b5563;">To 2026 Batch participants.</p>
+                    </div>
+                </div>
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">11:15 AM</h3>
+                        <p class="font-semibold">Introducing Student Leads of the Club & Plan Ahead</p>
+                        <p class="text-sm" style="color: #4b5563;">Meet the club's leadership and learn about future plans.</p>
+                    </div>
+                </div>
+                 <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">11:30 AM</h3>
+                        <p class="font-semibold">Expert Session by Guest Speaker</p>
+                        <p class="text-sm" style="color: #4b5563;">"Future-Proof Your Tech Career: An Insider Guide to Salesforce for Freshers", followed by Q&A.</p>
+                    </div>
+                </div>
+                 <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">12:15 PM</h3>
+                        <p class="font-semibold">Agentforce Project Expo & Networking</p>
+                        <p class="text-sm" style="color: #4b5563;">Explore projects and network with peers and faculty.</p>
+                    </div>
+                </div>
+                 <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="font-bold text-lg" style="color: #3357FF;">01:20 PM</h3>
+                        <p class="font-semibold">Lunch</p>
+                        <p class="text-sm" style="color: #4b5563;">Connect and refuel.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="responsible-ai-pillars">
+            <div>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;">
+                    <div style="text-align: center;">
+                        <h2 class="section-title" style="margin-bottom: 1rem;">Why Agentforce & Responsible AI? Shaping the Future</h2>
+                        <p class="card-text" style="font-size: 1.125rem; margin-bottom: 3rem;">
+                            Agentforce and Responsible AI are at the forefront of technological innovation. This chart highlights the key pillars that ensure AI systems are developed and used ethically and effectively, addressing real-world challenges with integrity. Understanding these principles is crucial for building trustworthy AI solutions.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="responsibleAIChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="spotlight" style="background-color: white;">
+            <div>
+                <div class="card">
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center;">
+                        <div style="text-align: center;">
+                            <p style="font-size: 6rem;">🏆</p>
+                            <p style="font-size: 4rem; font-weight: 700; color: #F1C40F; margin-top: 1rem;">2</p>
+                            <p style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">Major Recognitions</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <h2 class="section-title" style="margin-bottom: 1rem;">Spotlight on Student Talent</h2>
+                            <p class="card-text" style="font-size: 1.125rem;">
+                                A core part of our mission is to celebrate student achievement. The inauguration will feature two key recognitions: the <strong>Best Project Presentation</strong>, where students showcase their practical skills, and the <strong>Special Achievement Awards</strong>, honoring outstanding contributions throughout the year.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sessions">
+            <div>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;">
+                     <div class="card" style="order: 2;">
+                        <div class="chart-container">
+                            <canvas id="sessionsChart"></canvas>
+                        </div>
+                    </div>
+                    <div style="text-align: center; order: 1;">
+                        <h2 class="section-title" style="margin-bottom: 1rem;">Core Interactive Learning Blocks</h2>
+                        <p class="card-text" style="font-size: 1.125rem;">
+                            Two hours are dedicated to immersive, interactive experiences. The pie chart shows an equal split between the career-focused session on Agentforce & Responsible AI and the hands-on Project Expo, ensuring attendees get a balanced dose of expert insight and peer-to-peer learning.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="impact">
+            <div>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;">
+                    <div style="text-align: center;">
+                        <h2 class="section-title" style="margin-bottom: 1rem;">Expected Impact & Future Growth</h2>
+                        <p class="card-text" style="font-size: 1.125rem;">
+                            The inauguration is just the beginning. We anticipate a significant increase in student engagement and membership following the event. This projection illustrates our goal for sustained growth as we roll out new programs and initiatives, solidifying the club's impact on campus.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="impactChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <h2>Ready to Innovate?</h2>
+        <p>Join the Agentblazer Club and be part of the future of AI.</p>
+        <a href="https://forms.gle/Lk92B7SRBnPhFho68" target="_blank" class="member-button">
+            Become a Member
+        </a>
+    </footer>
+</body>
+</html>
